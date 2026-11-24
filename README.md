@@ -1,81 +1,141 @@
-# LEDGER • Premium Personal Finance Web Application
+# LEDGER Backend API • Node.js, Express, JWT & MongoDB
 
-A commercial-grade, responsive personal finance management dashboard built with React, Vite, CSS3, Lucide Icons, and Recharts.
-
-![LEDGER Banner](https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80)
+A production-grade, secure RESTful API for **LEDGER Personal Finance Management Web Application**, built with **Express.js**, **JWT (JSON Web Tokens)**, and **MongoDB with Mongoose ODM**.
 
 ---
 
-## ✨ Features Overview
+## 🏗️ Architecture & Tech Stack
 
-### 1. 📊 Executive Dashboard
-- **Real-Time Financial Health Metrics**: Total Balance, Total Income, Total Expenses, and Monthly Savings with savings rate calculations.
-- **Interactive Recharts Visualizations**:
-  - Multi-bar **Income vs Expense Trend** across months with custom currency-aware tooltips.
-  - Donut **Expense Distribution** with percentage share and category badges.
-- **Quick Add Transaction**: Instant modal popup from header or dashboard.
-- **Recent Activity Ledger**: Immediate view of latest transactions with category styling.
-
-### 2. 💳 Transaction Register & Management
-- Full **CRUD** operations: Create, Read, Update, Delete transactions with validation.
-- Dual Transaction Types: **Income** (Emerald) & **Expense** (Rose).
-- **Search & Deep Filtering**:
-  - Free-text search by description or notes.
-  - Type toggle (All / Expense / Income).
-  - Category selector.
-  - Sort by Newest, Oldest, Highest Amount, or Lowest Amount.
-- **One-Click CSV Export**: Download filtered transaction histories directly into Excel/Google Sheets.
-
-### 3. 📈 Financial Analytics & Deep Insights
-- **Monthly Spending Trends**: Area flow and multi-bar cashflow charts.
-- **Category-wise Spending Breakdown**: Interactive donut chart paired with proportional progress bars.
-- **Savings Analysis**: Instant savings rate calculation and trajectory indicator.
-- **Monthly Financial Ledger Table**: Month-by-month tabular breakdown of inflows, outflows, and net savings.
-
-### 4. 🎯 Budget Management & Over-Spend Guard
-- **Monthly Budget Limits**: Set custom spending caps for each category (Food, Shopping, Travel, Bills, Entertainment, Healthcare, Education, Others).
-- **Real-Time Utilization Bars**: Color-coded progress indicators:
-  - 🟢 **Normal**: < 80% utilized.
-  - 🟡 **Warning**: 80% – 100% utilized.
-  - 🔴 **Danger**: > 100% exceeded.
-- **Over-Budget Alert Banners**: Highlights exact rupee/dollar amount exceeded.
-
-### 5. ⚙️ Settings & Customization
-- **User Profile Management**: Update full name, email, job title, and monthly savings goal.
-- **Multi-Currency Engine**: Choose between **INR (₹)**, **USD ($)**, **EUR (€)**, **GBP (£)**, **JPY (¥)**, **CAD (CA$)**, **AUD (AU$)**, and **AED (AED)**.
-- **4 Premium FinTech Themes**:
-  - 🌌 **Midnight Navy** (Default)
-  - 👑 **Royal Purple**
-  - ⚡ **Jet Obsidian**
-  - 🌿 **Emerald Luxe**
-- **Data Safeguards**: One-click **Demo Data Restoration** and secure **Data Wipe** with modal confirmation.
+- **Runtime**: Node.js (CommonJS)
+- **Framework**: Express.js
+- **Database**: MongoDB with Mongoose ODM
+- **Authentication**: JWT (`jsonwebtoken`) with `Bearer` Authorization headers
+- **Password Security**: Salted SHA-256 Hashing with `bcryptjs`
+- **Security & CORS**: Cross-Origin Resource Sharing (`cors`)
 
 ---
 
-## 🛠️ Technology Stack
+## 📁 Directory Structure (MVC Pattern)
 
-- **Frontend Framework**: React 18
-- **Build Tool**: Vite
-- **Routing**: React Router DOM (v6)
-- **Icons**: Lucide React
-- **Data Visualization**: Recharts
-- **Storage**: Browser HTML5 `localStorage` (Zero external database required)
-- **Styling**: Modular CSS3 with CSS Custom Properties and Glassmorphism
+```
+server/
+├── config/
+│   └── db.js                 # MongoDB connection logic
+├── controllers/
+│   ├── authController.js     # User registration, login & profile
+│   ├── transactionController.js # Transaction CRUD & aggregated stats
+│   └── budgetController.js    # Budget limits vs real-time spending
+├── middleware/
+│   ├── authMiddleware.js     # JWT Bearer verification & user injection
+│   └── errorMiddleware.js    # Centralized 404 & Mongoose error handler
+├── models/
+│   ├── User.js               # User schema with bcrypt pre-save hook
+│   ├── Transaction.js        # Transaction schema with indexes
+│   └── Budget.js             # Budget schema with unique compound index
+├── routes/
+│   ├── authRoutes.js         # /api/auth routes
+│   ├── transactionRoutes.js  # /api/transactions routes
+│   └── budgetRoutes.js       # /api/budgets routes
+├── utils/
+│   └── generateToken.js      # JWT signing helper (30-day expiry)
+├── .env                      # Environment config (PORT, MONGO_URI, JWT_SECRET)
+├── package.json              # Backend dependencies
+└── server.js                 # Application entry point
+```
 
 ---
 
-## 🚀 Running the Project
+## 🔐 Authentication Flow (JWT)
+
+1. **User Registers / Logs in** (`POST /api/auth/register` or `POST /api/auth/login`).
+2. Server validates password against the salted hash stored in MongoDB using `bcrypt.compare`.
+3. Server generates a signed JWT containing the user's `_id` and signs it using `JWT_SECRET`.
+4. Client stores the token and passes it in the `Authorization` header for subsequent requests:
+   ```http
+   Authorization: Bearer <your_jwt_token_here>
+   ```
+5. `authMiddleware.protect` extracts the token, verifies the signature, and attaches the authenticated user document to `req.user`.
+
+---
+
+## 📡 Complete REST API Endpoints
+
+### 1. Authentication (`/api/auth`)
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `POST` | `/api/auth/register` | Public | Register new user (returns user data + JWT) |
+| `POST` | `/api/auth/login` | Public | Authenticate user & issue JWT |
+| `GET` | `/api/auth/me` | Protected (JWT) | Get current user's profile |
+| `PUT` | `/api/auth/me` | Protected (JWT) | Update profile, currency, theme, savings goal |
+
+### 2. Transactions (`/api/transactions`)
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `GET` | `/api/transactions` | Protected (JWT) | Get all transactions with search, type, category & date filters |
+| `POST` | `/api/transactions` | Protected (JWT) | Create a new transaction |
+| `PUT` | `/api/transactions/:id` | Protected (JWT) | Update an existing transaction |
+| `DELETE`| `/api/transactions/:id` | Protected (JWT) | Remove a transaction |
+| `GET` | `/api/transactions/stats` | Protected (JWT) | Get total balance, monthly savings, and category distribution |
+
+### 3. Budgets (`/api/budgets`)
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `GET` | `/api/budgets` | Protected (JWT) | Get category budgets + real-time calculated spending |
+| `POST` | `/api/budgets` | Protected (JWT) | Set or update monthly category budget limit |
+| `DELETE`| `/api/budgets/:id` | Protected (JWT) | Delete a budget limit |
+
+---
+
+## 🚀 How to Run the Server
 
 ```bash
-# Navigate to project folder
-cd /Users/bookpro/.gemini/antigravity/scratch/ledger-finance-app
+# 1. Navigate to the server folder
+cd /Users/bookpro/Projects/ledger-finance-app/server
 
-# Install dependencies (already installed)
+# 2. Install dependencies (if not already installed)
 npm install
 
-# Start Vite dev server (port 3000)
+# 3. Start development server with auto-reload
 npm run dev
 
-# Create production build
-npm run build
+# Or start standard production server
+npm start
+```
+
+---
+
+## 🧪 Quick Test Commands (cURL / Postman)
+
+### 1. Register a Test User:
+```bash
+curl -X POST http://localhost:5001/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Aarav Sharma",
+    "email": "aarav@fintech.io",
+    "password": "Password123"
+  }'
+```
+
+### 2. Login:
+```bash
+curl -X POST http://localhost:5001/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "aarav@fintech.io",
+    "password": "Password123"
+  }'
+```
+
+### 3. Create a Transaction (Replace `<TOKEN>` with your JWT):
+```bash
+curl -X POST http://localhost:5001/api/transactions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <TOKEN>" \
+  -d '{
+    "description": "TechCorp Monthly Salary",
+    "amount": 145000,
+    "type": "income",
+    "category": "Salary"
+  }'
 ```

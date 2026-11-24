@@ -1,0 +1,145 @@
+/* LEDGER Design System & Color Variables */
+
+:root,
+[data-theme='midnight'] {
+  --bg-primary: #070b14;
+  --bg-secondary: #0c1220;
+  --bg-tertiary: #111a2f;
+  --card-bg: rgba(17, 26, 47, 0.75);
+  --card-bg-solid: #111a2f;
+  --card-hover: rgba(22, 33, 59, 0.9);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-glow: rgba(99, 102, 241, 0.25);
+  --sidebar-bg: #090e1b;
+  --header-bg: rgba(7, 11, 20, 0.85);
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --text-highlight: #ffffff;
+
+  --accent-primary: #6366f1;
+  --accent-primary-hover: #4f46e5;
+  --accent-secondary: #06b6d4;
+  --accent-cyan: #06b6d4;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-amber: #f59e0b;
+  --accent-emerald: #10b981;
+  --accent-rose: #f43f5e;
+
+  --gradient-balance: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #06b6d4 100%);
+  --gradient-income: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+  --gradient-expense: linear-gradient(135deg, #e11d48 0%, #f43f5e 50%, #fb7185 100%);
+  --gradient-savings: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #c084fc 100%);
+  --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 25px -5px rgba(99, 102, 241, 0.3);
+}
+
+[data-theme='purple'] {
+  --bg-primary: #0a0818;
+  --bg-secondary: #120e2a;
+  --bg-tertiary: #19143a;
+  --card-bg: rgba(25, 20, 58, 0.75);
+  --card-bg-solid: #19143a;
+  --card-hover: rgba(33, 26, 75, 0.9);
+  --card-border: rgba(168, 85, 247, 0.16);
+  --card-border-glow: rgba(168, 85, 247, 0.35);
+  --sidebar-bg: #0d0a20;
+  --header-bg: rgba(10, 8, 24, 0.85);
+
+  --text-main: #faf5ff;
+  --text-muted: #c084fc;
+  --text-dim: #7e22ce;
+  --text-highlight: #ffffff;
+
+  --accent-primary: #a855f7;
+  --accent-primary-hover: #9333ea;
+  --accent-secondary: #ec4899;
+
+  --gradient-balance: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);
+  --gradient-income: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  --gradient-expense: linear-gradient(135deg, #db2777 0%, #f43f5e 100%);
+  --gradient-savings: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  --shadow-glow: 0 0 25px -5px rgba(168, 85, 247, 0.35);
+}
+
+[data-theme='obsidian'] {
+  --bg-primary: #08090b;
+  --bg-secondary: #0f1116;
+  --bg-tertiary: #161922;
+  --card-bg: rgba(22, 25, 34, 0.8);
+  --card-bg-solid: #161922;
+  --card-hover: rgba(30, 34, 46, 0.9);
+  --card-border: rgba(255, 255, 255, 0.07);
+  --card-border-glow: rgba(16, 185, 129, 0.3);
+  --sidebar-bg: #0b0d11;
+  --header-bg: rgba(8, 9, 11, 0.85);
+
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #475569;
+  --text-highlight: #ffffff;
+
+  --accent-primary: #10b981;
+  --accent-primary-hover: #059669;
+  --accent-secondary: #3b82f6;
+
+  --gradient-balance: linear-gradient(135deg, #0f766e 0%, #10b981 50%, #06b6d4 100%);
+  --gradient-income: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  --gradient-expense: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);
+  --gradient-savings: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+  --shadow-glow: 0 0 25px -5px rgba(16, 185, 129, 0.3);
+}
+
+[data-theme='emerald'] {
+  --bg-primary: #06110f;
+  --bg-secondary: #0a1b18;
+  --bg-tertiary: #0f2722;
+  --card-bg: rgba(15, 39, 34, 0.75);
+  --card-bg-solid: #0f2722;
+  --card-hover: rgba(20, 52, 45, 0.9);
+  --card-border: rgba(16, 185, 129, 0.16);
+  --card-border-glow: rgba(16, 185, 129, 0.35);
+  --sidebar-bg: #071513;
+  --header-bg: rgba(6, 17, 15, 0.85);
+
+  --text-main: #f0fdf4;
+  --text-muted: #86efac;
+  --text-dim: #22c55e;
+  --text-highlight: #ffffff;
+
+  --accent-primary: #10b981;
+  --accent-primary-hover: #059669;
+  --accent-secondary: #14b8a6;
+
+  --gradient-balance: linear-gradient(135deg, #047857 0%, #10b981 50%, #34d399 100%);
+  --gradient-income: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  --gradient-expense: linear-gradient(135deg, #e11d48 0%, #f87171 100%);
+  --gradient-savings: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+  --shadow-glow: 0 0 25px -5px rgba(16, 185, 129, 0.35);
+}
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', sans-serif;
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 78px;
+  --header-height: 72px;
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
